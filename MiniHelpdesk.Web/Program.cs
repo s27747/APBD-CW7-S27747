@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MiniHelpdesk.Web.Data;
+using MiniHelpdesk.Web.Middleware;
 using MiniHelpdesk.Web.Repositories;
 using MiniHelpdesk.Web.Services;
 
@@ -25,9 +26,11 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
+app.UseMiddleware<GlobalExceptionMiddleware>();
+app.UseMiddleware<RequestTimingMiddleware>();
+
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
