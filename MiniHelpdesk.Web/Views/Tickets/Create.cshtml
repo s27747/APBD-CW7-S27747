@@ -1,0 +1,41 @@
+@model MiniHelpdesk.Web.Services.CreateTicketRequest
+
+@{
+    ViewData["Title"] = "Nowe zgłoszenie";
+}
+
+<h1>Nowe zgłoszenie</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Tytuł</label>
+        <input asp-for="Title" class="form-control"/>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Opis</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Author" class="form-label">Autor komentarza</label>
+        <input asp-for="Author" class="form-control"/>
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FirstCommentContent" class="form-label">Pierwszy komentarz</label>
+        <textarea asp-for="FirstCommentContent" class="form-control"></textarea>
+        <span asp-validation-for="FirstCommentContent" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+    <a asp-action="Index" class="btn btn-secondary">Wróć</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

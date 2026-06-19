@@ -1,0 +1,41 @@
+@model List<MiniHelpdesk.Web.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Zgłoszenia";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Zgłoszenia</h1>
+    <a asp-action="Create" class="btn btn-primary">Dodaj zgłoszenie</a>
+</div>
+
+@if (!Model.Any())
+{
+    <p>Brak zgłoszeń.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Status</th>
+            <th>Data utworzenia</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.Title</td>
+                <td>@ticket.Status</td>
+                <td>@ticket.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@ticket.Id" class="btn btn-sm btn-outline-primary">Szczegóły</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

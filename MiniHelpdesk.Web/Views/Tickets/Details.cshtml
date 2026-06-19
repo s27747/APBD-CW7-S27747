@@ -1,0 +1,49 @@
+@model MiniHelpdesk.Web.Models.Ticket
+
+@{
+    ViewData["Title"] = "Szczegóły zgłoszenia";
+}
+
+<h1>@Model.Title</h1>
+
+<div class="mb-3">
+    <strong>Status:</strong> @Model.Status
+</div>
+
+<div class="mb-3">
+    <strong>Data utworzenia:</strong> @Model.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+</div>
+
+<div class="mb-3">
+    <strong>Opis:</strong>
+    <p>@Model.Description</p>
+</div>
+
+@if (Model.Status != MiniHelpdesk.Web.Models.TicketStatus.Closed)
+{
+    <form asp-action="Close" asp-route-id="@Model.Id" method="post" class="mb-3">
+        <button type="submit" class="btn btn-warning">Zamknij zgłoszenie</button>
+    </form>
+}
+
+<h2>Komentarze</h2>
+
+@if (!Model.Comments.Any())
+{
+    <p>Brak komentarzy.</p>
+}
+else
+{
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="border rounded p-3 mb-2">
+            <div>
+                <strong>@comment.Author</strong>
+                <span class="text-muted">@comment.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</span>
+            </div>
+            <p class="mb-0">@comment.Content</p>
+        </div>
+    }
+}
+
+<a asp-action="Index" class="btn btn-secondary">Wróć do listy</a>
